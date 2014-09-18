@@ -4,6 +4,8 @@
  * MIT licensed
  *
  * Copyright (C) 2013 usabli.ca - A weekend project by Afshin Mehrabani (@afshinmeh)
+ *
+ * Changed for agrolab aloora.
  */
 
 (function (root, factory) {
