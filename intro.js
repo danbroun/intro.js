@@ -5,7 +5,7 @@
  *
  * Copyright (C) 2013 usabli.ca - A weekend project by Afshin Mehrabani (@afshinmeh)
  *
- * Changed for agrolab aloora.
+ * Ch. Vester: 22.09.2014 Changes for Aloora. Not guarantied to work in other contexts.
  */
 
 (function (root, factory) {
@@ -497,6 +497,13 @@
         widthHeightPadding = 0;
       }
 
+      // Ch. Vester: 22.09.2014 Change for Aloora, position always relative to target element, therefore
+      // offset of target element must be subtracted
+      var targetElementPosition = _getOffset(this._targetElement);
+
+      elementPosition.top -= targetElementPosition.top;
+      elementPosition.left -= targetElementPosition.left;
+
       //set new position to helper layer
       helperLayer.setAttribute('style', 'width: ' + (elementPosition.width  + widthHeightPadding)  + 'px; ' +
                                         'height:' + (elementPosition.height + widthHeightPadding)  + 'px; ' +
@@ -736,12 +743,13 @@
 
       //fix The Stacking Contenxt problem.
       //More detail: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context
-      var zIndex = _getPropValue(parentElm, 'z-index');
-      var opacity = parseFloat(_getPropValue(parentElm, 'opacity'));
-      var transform = _getPropValue(parentElm, 'transform') || _getPropValue(parentElm, '-webkit-transform') || _getPropValue(parentElm, '-moz-transform') || _getPropValue(parentElm, '-ms-transform') || _getPropValue(parentElm, '-o-transform');
-      if (/[0-9]+/.test(zIndex) || opacity < 1 || transform !== 'none') {
-        parentElm.className += ' introjs-fixParent';
-      }
+      // Ch. Vester: 22.09.2014 Change for Aloora, this introjs fix does not work for Aloora.
+      // Therefore remove this fix.
+      //      var zIndex = _getPropValue(parentElm, 'z-index');
+      //      var opacity = parseFloat(_getPropValue(parentElm, 'opacity'));
+      //      if (/[0-9]+/.test(zIndex) || opacity < 1) {
+      //        parentElm.className += ' introjs-fixParent';
+      //      }
 
       parentElm = parentElm.parentNode;
     }
@@ -845,7 +853,8 @@
     overlayLayer.className = 'introjs-overlay';
 
     //check if the target element is body, we should calculate the size of overlay layer in a better way
-    if (targetElm.tagName.toLowerCase() === 'body') {
+    // Ch. Vester: 23.09.2014 Change for Aloora, position always relative to target element, therefore offset always zero
+    if (true /*targetElm.tagName.toLowerCase() === 'body'*/) {
       styleText += 'top: 0;bottom: 0; left: 0;right: 0;position: fixed;';
       overlayLayer.setAttribute('style', styleText);
     } else {
